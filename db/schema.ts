@@ -1,9 +1,13 @@
-import { pgTable, bigint, varchar } from "drizzle-orm/pg-core";
+import { pgTable, bigint, varchar, text } from "drizzle-orm/pg-core";
 
 export const user = pgTable("auth_user", {
     id: varchar("id", {
         length: 15 // change this when using custom user ids
-    }).primaryKey()
+    }).primaryKey(),
+    name: varchar("name", {
+        length: 36
+    }),
+    picture: text("picture")
     // other user attributes
 });
 

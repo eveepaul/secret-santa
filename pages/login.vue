@@ -1,39 +1,9 @@
-<script setup>
-import { google } from "@lucia-auth/oauth/providers";
-import { pg } from "@lucia-auth/adapter-postgresql";
-import { lucia } from 'lucia';
-
-import postgres from "postgres";
-
-export const queryClient = postgres(/* ... */);
-
-export const db: PostgresJsDatabase = drizzle(queryClient);
-
-
-const pool = new postgres.Pool({
-    connectionString: 'postgres://postgres:postgres@localhost:5432/secret_santa'
-});
-
-const auth = lucia({
-    adapter: pg(pool, {
-        user: "auth_user",
-        key: "user_key",
-        session: "user_session"
-    }),
-    env: 'DEV',
-
-    getUserAttributes: (data) => data
-});
-const configs = {
-    clientId: '652324658606-3bb7sn9s2qadc9hi1637fbaj2o57vgak.apps.googleusercontent.com',
-    clientSecret: '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',
-    redirectUri: 'http://localhost:3000/login',
+<script setup lang="ts">
+const user = useUser();
+console.log(user.value);
+if (user.value) {
+    await navigateTo('/');
 }
-const googleAuth = (event) => {
-    event.preventDefault();
-    google(auth, configs);
-}
-
 </script>
 <template>
     <section class="bg-white">
@@ -103,9 +73,9 @@ const googleAuth = (event) => {
                         action="#"
                         class="mt-8 flex flex-col gap-2"
                     >
-                        <button
+                        <a
                             class="px-4 py-2 border flex justify-center gap-2 border-slate-200 rounded-lg text-slate-700 hover:border-slate-400 hover:text-slate-900 hover:shadow transition duration-150"
-                            @click="googleAuth"
+                            href="/api/login/google"
                         >
                             <img
                                 class="w-6 h-6"
@@ -114,19 +84,7 @@ const googleAuth = (event) => {
                                 alt="google logo"
                             >
                             <span>Sign in with Google</span>
-                        </button>
-                        <div class="underline"></div>
-                        <button
-                            class="px-4 py-2 border flex justify-center gap-2 border-slate-200 rounded-lg text-slate-700 hover:border-slate-400 hover:text-slate-900 hover:shadow transition duration-150"
-                        >
-                            <img
-                                class="w-6 h-6"
-                                src="https://www.svgrepo.com/show/13642/facebook.svg"
-                                loading="lazy"
-                                alt="facebook logo"
-                            >
-                            <span>Sign in with Facebook</span>
-                        </button>
+                        </a>
                     </form>
                 </div>
             </main>
