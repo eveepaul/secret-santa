@@ -1,5 +1,5 @@
-import { User } from "~/composables/auth";
 
+import { User } from 'lucia'
 export default defineNuxtRouteMiddleware(async () => {
     const user = useUser();
     const { data, error } = await useFetch<User>("/api/user");

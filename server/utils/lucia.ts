@@ -27,7 +27,8 @@ export const auth = lucia({
   env: process.dev ? "DEV" : "PROD",
   getUserAttributes: (data) => {
     return {
-      name: data
+      name: data.name,
+      picture: data.picture
     };
   }
 });
@@ -35,7 +36,7 @@ export const auth = lucia({
 
 
 
-export const githubAuth = google(auth, {
+export const googleAuth = google(auth, {
   clientId: runtimeConfig.googleClientId,
   clientSecret: runtimeConfig.googleClientSecret,
   redirectUri: runtimeConfig.googleRedirectUri

@@ -16,11 +16,11 @@ const handleLogout = async (e: Event) => {
   </h1>
 
   <pre>
-    {{ user.value }}
+    {{ user }}
   </pre>
 
   <form
-    v-if="!user"
+    v-if="user"
     method="post"
     action="/api/logout"
     @submit.prevent="handleLogout"
