@@ -7,7 +7,10 @@ export const user = pgTable("auth_user", {
     name: varchar("name", {
         length: 36
     }),
-    picture: text("picture")
+    picture: text("picture"),
+    email: varchar("email", {
+        length: 36
+    })
     // other user attributes
 });
 

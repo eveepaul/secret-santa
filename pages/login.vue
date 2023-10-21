@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const user = useUser();
 if (user.value) {
+    // const session = await auth.getSession()
     await navigateTo('/');
 }
 </script>
@@ -22,8 +23,8 @@ if (user.value) {
             >
                 <div class="max-w-xl lg:max-w-3xl">
                     <h1
-                        class="mt-6 text-2xl text-gray-900 sm:text-3xl md:text-3xl font-inter">
-                        Tomigo's Secret Santa
+                        class="mt-6 text-center text-2xl text-gray-900 sm:text-3xl md:text-3xl font-inter">
+                        Tomigo Secret Santa
                     </h1>
 
                     <div class="mt-6">

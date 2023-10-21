@@ -22,15 +22,16 @@ export default defineEventHandler(async (event) => {
 
   try {
     const { googleUser, createUser, getExistingUser } = await googleAuth.validateCallback(code)
-
-    const { name, picture } = googleUser;
+    console.log(googleUser);
+    const { name, picture, email } = googleUser;
     const getUser = async () => {
       const existingUser = await getExistingUser();
       if (existingUser) return existingUser;
       const user = await createUser({
         attributes: {
           name,
-          picture
+          picture,
+          email
         }
       });
       return user;
@@ -42,7 +43,7 @@ export default defineEventHandler(async (event) => {
     });
 
     authRequest.setSession(session);
-    return sendRedirect(event, "/");
+    return sendRedirect(event, "/login");
 
 
   } catch (e) {

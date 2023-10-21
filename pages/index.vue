@@ -7,7 +7,7 @@ const handleLogout = async (e: Event) => {
     method: "POST",
     redirect: "manual"
   });
-  await navigateTo("/login");
+  // await navigateTo("/login");
 };
 </script>
 <template>

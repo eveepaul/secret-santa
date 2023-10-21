@@ -28,7 +28,8 @@ export const auth = lucia({
   getUserAttributes: (data) => {
     return {
       name: data.name,
-      picture: data.picture
+      picture: data.picture,
+      email: data.email
     };
   }
 });
@@ -39,7 +40,8 @@ export const auth = lucia({
 export const googleAuth = google(auth, {
   clientId: runtimeConfig.googleClientId,
   clientSecret: runtimeConfig.googleClientSecret,
-  redirectUri: runtimeConfig.googleRedirectUri
+  redirectUri: runtimeConfig.googleRedirectUri,
+  scope: ['https://www.googleapis.com/auth/userinfo.email']
 });
 
 
