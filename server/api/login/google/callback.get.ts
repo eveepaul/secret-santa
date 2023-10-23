@@ -22,7 +22,6 @@ export default defineEventHandler(async (event) => {
 
   try {
     const { googleUser, createUser, getExistingUser } = await googleAuth.validateCallback(code)
-    console.log(googleUser);
     const { name, picture, email } = googleUser;
     const getUser = async () => {
       const existingUser = await getExistingUser();
@@ -57,7 +56,6 @@ export default defineEventHandler(async (event) => {
       );
     }
 
-    console.error(e);
     return sendError(
       event,
       createError({

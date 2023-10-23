@@ -19,59 +19,18 @@ if (user.value) {
             </aside>
 
             <main
-                class="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6"
+                class="flex items-center justify-center flex-col px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6"
             >
                 <div class="max-w-xl lg:max-w-3xl">
                     <h1
                         class="mt-6 text-center text-2xl text-gray-900 sm:text-3xl md:text-3xl font-inter">
                         Tomigo Secret Santa
                     </h1>
-
-                    <div class="mt-6">
-                        <h2 class="sr-only">Steps</h2>
-
-                        <div
-                            class="relative after:absolute after:inset-x-0 after:top-1/2 after:block after:h-0.5 after:-translate-y-1/2 after:rounded-lg after:bg-gray-100">
-                            <ol
-                                class="relative z-10 flex justify-between text-sm font-medium text-gray-500">
-                                <li class="flex items-center gap-2 bg-white p-2">
-                                    <span
-                                        class="h-6 w-6 rounded-full bg-blue-500 text-center text-[10px]/6 font-bold text-white"
-                                    >
-                                        1
-                                    </span>
-
-                                    <span class="hidden sm:block"> Sign in </span>
-                                </li>
-
-                                <li class="flex items-center gap-2 bg-white p-2">
-                                    <span
-                                        class="h-6 w-6 rounded-full bg-gray-100 text-center text-[10px]/6 font-bold"
-                                    >
-                                        2
-                                    </span>
-
-                                    <span class="hidden sm:block"> Enter name
-                                    </span>
-                                </li>
-
-                                <li class="flex items-center gap-2 bg-white p-2">
-                                    <span
-                                        class="h-6 w-6 rounded-full bg-gray-100 text-center text-[10px]/6 font-bold"
-                                    >
-                                        3
-                                    </span>
-
-                                    <span class="hidden sm:block"> Enter room
-                                    </span>
-                                </li>
-                            </ol>
-                        </div>
-                    </div>
-
+                    <p class="mt-2 lg:px-16 font-thin text-xl text-center">Organize
+                        Secret Santa gift exchanges.</p>
                     <form
                         action="#"
-                        class="mt-8 flex flex-col gap-2"
+                        class="mt-8 flex flex-col gap-2 lg:px-16"
                     >
                         <a
                             class="px-4 py-2 border flex justify-center gap-2 border-slate-200 rounded-lg text-slate-700 hover:border-slate-400 hover:text-slate-900 hover:shadow transition duration-150"
