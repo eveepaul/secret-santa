@@ -1,46 +1,46 @@
-import { pgTable, bigint, varchar, text } from "drizzle-orm/pg-core";
+import { pgTable, bigint, varchar, text } from 'drizzle-orm/pg-core';
 
-export const user = pgTable("auth_user", {
-    id: varchar("id", {
-        length: 15 // change this when using custom user ids
+export const user = pgTable('auth_user', {
+    id: varchar('id', {
+        length: 15, // change this when using custom user ids
     }).primaryKey(),
-    name: varchar("name", {
-        length: 36
+    name: varchar('name', {
+        length: 36,
     }),
-    picture: text("picture"),
-    email: varchar("email", {
-        length: 36
-    })
+    picture: text('picture'),
+    email: varchar('email', {
+        length: 36,
+    }),
     // other user attributes
 });
 
-export const session = pgTable("user_session", {
-    id: varchar("id", {
-        length: 128
+export const session = pgTable('user_session', {
+    id: varchar('id', {
+        length: 128,
     }).primaryKey(),
-    userId: varchar("user_id", {
-        length: 15
+    userId: varchar('user_id', {
+        length: 15,
     })
         .notNull()
         .references(() => user.id),
-    activeExpires: bigint("active_expires", {
-        mode: "number"
+    activeExpires: bigint('active_expires', {
+        mode: 'number',
     }).notNull(),
-    idleExpires: bigint("idle_expires", {
-        mode: "number"
-    }).notNull()
+    idleExpires: bigint('idle_expires', {
+        mode: 'number',
+    }).notNull(),
 });
 
-export const key = pgTable("user_key", {
-    id: varchar("id", {
-        length: 255
+export const key = pgTable('user_key', {
+    id: varchar('id', {
+        length: 255,
     }).primaryKey(),
-    userId: varchar("user_id", {
-        length: 15
+    userId: varchar('user_id', {
+        length: 15,
     })
         .notNull()
         .references(() => user.id),
-    hashedPassword: varchar("hashed_password", {
-        length: 255
-    })
+    hashedPassword: varchar('hashed_password', {
+        length: 255,
+    }),
 });

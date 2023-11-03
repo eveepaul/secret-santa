@@ -1,8 +1,7 @@
-
-import { User } from 'lucia'
+import type { User } from 'lucia';
 export default defineNuxtRouteMiddleware(async () => {
     const user = useUser();
-    const { data, error } = await useFetch<User>("/api/user");
-    if (error.value) throw createError("Failed to fetch data");
+    const { data, error } = await useFetch<User>('/api/user');
+    if (error.value) throw createError('Failed to fetch data');
     user.value = data.value ?? null;
 });

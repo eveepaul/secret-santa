@@ -1,17 +1,17 @@
 <template>
-  <a class="group relative inline-block focus:outline-none focus:ring">
-    <span
-      class="absolute inset-0 translate-x-1.5 translate-y-1.5 bg-yellow-300 transition-transform group-hover:translate-y-0 group-hover:translate-x-0"
-    ></span>
+    <a class="group relative inline-block focus:outline-none focus:ring">
+        <span
+            class="absolute inset-0 translate-x-1.5 translate-y-1.5 bg-yellow-300 transition-transform group-hover:translate-y-0 group-hover:translate-x-0"
+        ></span>
 
-    <span
-      class="relative inline-block border-2 border-current px-8 py-3 text-sm font-bold uppercase tracking-widest text-black group-active:text-opacity-75"
-    >
-      Create Pool
-    </span>
-  </a>
+        <span
+            class="relative inline-block border-2 border-current px-8 py-3 text-sm font-bold uppercase tracking-widest text-black group-active:text-opacity-75"
+        >
+            Create Pool
+        </span>
+    </a>
 
-  <!-- <a
+    <!-- <a
     class="group relative inline-block focus:outline-none focus:ring"
     href="/download"
   >
@@ -27,9 +27,6 @@
   </a> -->
 </template>
 
-<script lang="ts" setup>
-
-</script>
+<script lang="ts" setup></script>
 
 <style></style>
-
