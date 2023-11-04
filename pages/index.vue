@@ -4,9 +4,21 @@ definePageMeta({
 });
 
 const user = useUser();
+const poolIsOpen = ref(false);
+const openPool = () => {
+    poolIsOpen.value = true;
+};
 </script>
 <template>
-    <MainHeader :user="user" />
+    <div>
+        <MainHeader
+            :user="user"
+            @open-pool="openPool"
+        />
+        <UModal v-model="poolIsOpen">
+            <PoolUserInput />
+        </UModal>
+    </div>
 </template>
 
 <style></style>

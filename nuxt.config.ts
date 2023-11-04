@@ -44,4 +44,7 @@ export default defineNuxtConfig({
     nitro: {
         moduleSideEffects: ['lucia/polyfill/node'],
     },
+    colorMode: {
+        preference: 'light',
+    },
 });

@@ -7,11 +7,7 @@
         "dev": "nuxt dev",
         "generate": "nuxt generate",
         "preview": "nuxt preview",
-        "postinstall": "nuxt prepare",
-        "lint:js": "eslint --ext \".ts,.vue\" --ignore-path .gitignore .",
-        "lint:prettier": "prettier --check .",
-        "lint": "yarn lint:js && yarn lint:prettier",
-        "lintfix": "prettier --write --list-different . && yarn lint:js --fix"
+        "postinstall": "nuxt prepare"
     },
     "devDependencies": {
         "@nuxt/devtools": "latest",
@@ -22,11 +18,8 @@
         "autoprefixer": "^10.4.16",
         "drizzle-kit": "^0.19.13",
         "eslint": "^8.52.0",
-        "eslint-config-prettier": "^9.0.0",
-        "eslint-plugin-prettier": "^5.0.1",
         "nuxt": "^3.7.4",
         "postcss": "^8.4.31",
-        "prettier": "^3.0.3",
         "tailwindcss": "^3.3.3",
         "typescript": "^5.2.2",
         "vue": "^3.3.4",

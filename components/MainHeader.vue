@@ -1,3 +1,23 @@
+<script lang="ts" setup>
+import type { User } from 'lucia';
+defineProps<{
+    user: User | null;
+}>();
+const emit = defineEmits(['openPool']);
+
+const handleLogout = async () => {
+    await $fetch('/api/logout', {
+        method: 'POST',
+        redirect: 'manual',
+    });
+    console.log('logging out!!');
+    await navigateTo('/login');
+};
+
+const openPool = () => {
+    emit('openPool');
+};
+</script>
 <template>
     <header class="bg-gray-50">
         <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8">
@@ -27,7 +47,10 @@
                     class="block h-6 w-px rounded-full bg-gray-200"
                 ></span>
 
-                <a href="#" class="block shrink-0">
+                <a
+                    href="#"
+                    class="block shrink-0"
+                >
                     <span class="sr-only">Profile</span>
                     <NuxtImg
                         alt="Profile Picture"
@@ -41,15 +64,10 @@
                     class="block h-6 w-px rounded-full bg-gray-200"
                 ></span>
 
-                <form
-                    v-if="user"
-                    method="post"
-                    action="/api/logout"
-                    @submit.prevent="handleLogout"
-                >
+                <form v-if="user">
                     <button
                         class="block shrink-0 rounded-full bg-white p-2.5 text-gray-600 shadow-sm hover:text-gray-700"
-                        @click.submit=""
+                        @click="handleLogout"
                     >
                         <span class="sr-only">Log out</span>
                         <svg
@@ -81,27 +99,10 @@
                     </p>
                 </div>
                 <div class="mt-2">
-                    <HoverBtn />
+                    <HoverBtn @open-pool="openPool" />
                 </div>
             </div>
         </div>
     </header>
 </template>
-
-<script lang="ts" setup>
-import type { User } from 'lucia';
-defineProps<{
-    user: User | null;
-}>();
-
-const handleLogout = async (e: Event) => {
-    if (!(e.target instanceof HTMLFormElement)) return;
-    await $fetch('/api/logout', {
-        method: 'POST',
-        redirect: 'manual',
-    });
-    await navigateTo('/login');
-};
-</script>
-
 <style></style>
