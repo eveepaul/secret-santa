@@ -1,3 +1,4 @@
+const defaultTheme = require('tailwindcss/defaultTheme');
 /** @type {import('tailwindcss').Config} */
 export default {
     content: [
@@ -9,7 +10,13 @@ export default {
         './error.vue',
     ],
     theme: {
-        extend: {},
+        extend: {
+            screens: {
+                'xs': '475px',
+                ...defaultTheme.screens,
+            }
+        },
+
     },
     plugins: ['@tailwindcss/forms'],
 };

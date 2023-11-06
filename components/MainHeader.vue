@@ -24,7 +24,8 @@ const openPool = () => {
             <div class="flex items-center justify-end gap-4">
                 <div class="flex items-center gap-4">
                     <a
-                        href="#"
+                        href="https://github.com/eveepaul/secret-santa"
+                        target="_blank"
                         class="block shrink-0 rounded-full bg-white p-2.5 text-gray-600 shadow-sm hover:text-gray-700"
                     >
                         <span class="sr-only">Github</span>
