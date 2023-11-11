@@ -12,10 +12,7 @@ const { email, name } = useVModels(props, emits);
 <template>
   <div class="px-4 pt-2 flex flex-col ml-8">
     <div class="flex justify-between gap-4">
-      <UFormGroup
-        class="flex-grow"
-        label="Email"
-      >
+      <UFormGroup>
         <UInput
           placeholder="you@gmail.com"
           icon="i-heroicons-envelope"
@@ -23,7 +20,7 @@ const { email, name } = useVModels(props, emits);
           type="email"
         />
       </UFormGroup>
-      <UFormGroup label="Name">
+      <UFormGroup>
         <UInput
           placeholder="Name"
           v-model="name"
@@ -35,7 +32,7 @@ const { email, name } = useVModels(props, emits);
           :padded="false"
           color="red"
           variant="link"
-          class="items-end mt-5"
+          class="items-end"
           icon="i-heroicons-x-mark-20-solid"
           @click="$emit('removeInput', { id })"
         />

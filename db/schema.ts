@@ -44,3 +44,43 @@ export const key = pgTable('user_key', {
         length: 255,
     }),
 });
+
+export const pool = pgTable('pool', {
+    id: varchar('id', {
+        length: 15,
+    }).primaryKey(),
+    code: varchar('code', {
+        length: 10,
+    }).notNull(),
+    owner: varchar('owner', {
+        length: 15
+    }).notNull().references(() => user.id),
+    description: text('description').default('')
+});
+
+export const member = pgTable('member', {
+    id: varchar('id', {
+        length: 15
+    }).primaryKey(),
+    name: varchar('name', {
+        length: 32
+    }).notNull(),
+    santa: varchar('santa', {
+        length: 15
+    }).default(''),
+    blacklist: varchar('blacklist', {
+        length: 15
+    }).default('')
+});
+
+export const userPool = pgTable('user_pool', {
+    id: varchar('id', {
+        length: 32,
+    }).primaryKey(),
+    memberId: varchar('member_id', {
+        length: 15,
+    }).notNull().references(() => member.id),
+    poolId: varchar('pool_id', {
+        length: 15
+    }).notNull().references(() => pool.id)
+});

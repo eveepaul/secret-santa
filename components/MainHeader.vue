@@ -92,7 +92,7 @@ const openPool = () => {
             <div class="mt-8 flex justify-between">
                 <div>
                     <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">
-                        Welcome back, {{ user?.name }}!
+                        Hi, {{ user?.name }}!
                     </h1>
 
                     <p class="mt-1.5 text-sm text-gray-500">

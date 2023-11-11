@@ -4,17 +4,9 @@ import { pg } from '@lucia-auth/adapter-postgresql';
 import { h3 } from 'lucia/middleware';
 import 'lucia/polyfill/node';
 
-import { drizzle } from 'drizzle-orm/node-postgres';
-
-import postgres from 'pg';
 
 const runtimeConfig = useRuntimeConfig();
-
-const pool = new postgres.Pool({
-    connectionString: runtimeConfig.pgConnectionString,
-});
-
-export const db = drizzle(pool);
+const { pool } = getDatabase();
 
 export const auth = lucia({
     adapter: pg(pool, {
