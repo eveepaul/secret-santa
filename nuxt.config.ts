@@ -19,6 +19,7 @@ export default defineNuxtConfig({
     modules: [
         '@nuxt/ui',
         '@vueuse/nuxt',
+        '@nuxt/image',
         [
             '@nuxtjs/google-fonts',
             {
@@ -34,7 +35,15 @@ export default defineNuxtConfig({
                 },
             },
         ],
-        '@nuxt/image',
+        ['@vee-validate/nuxt', {
+            autoImports: true,
+            componentNames: {
+                Form: 'VeeForm',
+                Field: 'VeeField',
+                FieldArray: 'VeeFieldArray',
+                ErrorMessage: 'VeeErrorMessage',
+            },
+        }],
     ],
     runtimeConfig: {
         googleClientId: '',

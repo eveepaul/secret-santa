@@ -1,6 +1,6 @@
 <template>
   <a
-    class="group relative inline-block focus:outline-none focus:ring"
+    class="group relative inline-block focus:outline-none focus:ring cursor-pointer"
     @click="$emit('openPool')"
   >
     <span

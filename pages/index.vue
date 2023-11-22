@@ -2,42 +2,35 @@
 import { UserInput } from '@/types/userTypes';
 import { watch } from 'vue';
 import { klona } from 'klona';
-import { array, object, string, type InferType } from 'yup';
-import type { FormError } from '#ui/types';
+import { array, object, string } from 'yup';
 
 definePageMeta({
     middleware: 'protected',
 });
 
-const initUsers = [{
-    name: '',
-    email: ''
-}, {
-    name: '',
-    email: ''
-}, {
-    name: '',
-    email: ''
-}];
-const usersInput = ref<UserInput[]>(klona(initUsers));
+const initUsers = {
+    users: [{
+        name: '',
+        email: '',
+    }, {
+        name: '',
+        email: '',
+    }, {
+        name: '',
+        email: '',
+    }]
+};
 
+type InputObj = {
+    users: UserInput[];
+};
+const usersInput = ref<InputObj>(klona(initUsers));
 
 
 const user = useUser();
 const poolIsOpen = ref(false);
 const openPool = () => {
     poolIsOpen.value = true;
-};
-
-const addInput = () => {
-    usersInput.value.push({
-        name: '',
-        email: ''
-    });
-};
-
-const removeInput = (data: { id: number; }) => {
-    usersInput.value.splice(data.id, 1);
 };
 
 watch(poolIsOpen, (newVal) => {
@@ -47,28 +40,31 @@ watch(poolIsOpen, (newVal) => {
     }
 });
 
-// validation 
 
-const schema = array(
-    object({
-        email: string().email('Invalid email').required('Required'),
-        name: string().required('Required')
-    })
-);
-type Schema = InferType<typeof schema>;
+const schema = object().shape({
+    users: array()
+        .of(
+            object().shape({
+                email: string().email('Invalid email').required('Required').label('Email'),
+                name: string().required('Required').label('Name')
+            })
+        )
+        .strict(),
+});
 
-const form = ref();
+useForm({
+    initialValues: initUsers
+});
 
-// const validate = (): FormError[] => {
-//     return form.value.getErrors();
-// };
-
-const call = async () => {
-    // console.log('call!');
-    await form.value.validate();
+const onSubmit = (obj: any) => {
+    console.log(obj);
 };
 
+const test = (event: any) => {
+    console.log(event);
+};
 
+const { fields, push, remove } = useFieldArray('users')
 
 </script>
 <template>
@@ -82,21 +78,68 @@ const call = async () => {
             prevent-close
         >
             <UCard>
-                <UForm
-                    :schema="schema"
-                    :state="usersInput"
-                    :validate-on="['change']"
-                    ref="form"
+                <VeeForm
+                    @submit="onSubmit"
+                    @invalid-submit="test"
+                    :initial-values="initUsers"
+                    :validation-schema="schema"
                 >
-                    <PoolUserInput
-                        v-for="(userInput, id) in usersInput"
-                        :key="id"
-                        :id="id"
-                        v-model:email="userInput.email"
-                        v-model:name="userInput.name"
-                        @remove-input="removeInput"
-                    />
-                </UForm>
+                    <fieldset
+                        class="InputGroup"
+                        v-for="(field, idx) in fields"
+                        :key="field.key"
+                    >
+                        <div class="px-4 pt-2 flex flex-col ml-8">
+                            <div class="flex justify-between gap-4">
+                                <VeeField
+                                    :id="`name_${idx}`"
+                                    :name="`users[${idx}].name`"
+                                    v-slot="{ field, meta }"
+                                >
+                                    <UFormGroup
+                                        :error="!meta.valid && meta.touched">
+                                        <UInput
+                                            placeholder="Name"
+                                            type="text"
+                                            v-bind="field"
+                                        />
+                                    </UFormGroup>
+                                </VeeField>
+                                <VeeField
+                                    :id="`email_${idx}`"
+                                    :name="`users[${idx}].email`"
+                                    v-slot="{ field, meta }"
+                                >
+                                    <UFormGroup
+                                        :error="!meta.valid && meta.touched">
+                                        <UInput
+                                            placeholder="you@gmail.com"
+                                            icon="i-heroicons-envelope"
+                                            type="email"
+                                            v-bind="field"
+                                        />
+                                    </UFormGroup>
+                                </VeeField>
+                                <div class="flex flex-col justify-center">
+                                    <UButton
+                                        v-if="idx > 2"
+                                        :padded="false"
+                                        color="red"
+                                        variant="link"
+                                        class="items-end"
+                                        icon="i-heroicons-x-mark-20-solid"
+                                        @click="remove(idx)"
+                                    />
+                                    <div
+                                        v-else
+                                        class="ml-5"
+                                    ></div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <button type="submit">Submit</button>
+                </VeeForm>
                 <div class="flex justify-center mt-4">
                     <UButton
                         icon="i-heroicons-user-plus"
@@ -105,7 +148,7 @@ const call = async () => {
                         variant="outline"
                         label="Add more person"
                         :trailing="false"
-                        @click="addInput"
+                        @click="push({ name: '', email: '' })"
                     />
                 </div>
 
@@ -126,13 +169,13 @@ const call = async () => {
                             label="Create"
                             :trailing="false"
                             class="items-end"
-                            @click="call"
                         />
-
                     </div>
                 </template>
             </UCard>
         </UModal>
+
+
     </div>
 </template>
 

@@ -1,29 +1,44 @@
 
 <script lang="ts" setup>
-import { UserInput } from '~/types/userTypes';
+import type { UserInput } from '~/types/userTypes';
 
 type Props = UserInput & {
   id: number;
 };
 const props = defineProps<Props>();
-const emits = defineEmits(['update:email', 'update:name', 'removeInput']);
-const { email, name } = useVModels(props, emits);
+
+const email = toRef(props, 'email');
+const name = toRef(props, 'name');
+const emailField = useField(email, undefined, {
+  initialValue: props.email,
+});
+const nameField = useField(name, undefined, {
+  initialValue: props.name,
+});
+const emits = defineEmits(['removeInput']);
 </script>
 <template>
   <div class="px-4 pt-2 flex flex-col ml-8">
     <div class="flex justify-between gap-4">
-      <UFormGroup>
+      <UFormGroup :error="emailField.errorMessage.value">
         <UInput
           placeholder="you@gmail.com"
           icon="i-heroicons-envelope"
-          v-model="email"
           type="email"
+          name="email"
+          :value="emailField.value.value"
+          @input="emailField.handleChange"
+          @blur="emailField.handleBlur"
         />
       </UFormGroup>
-      <UFormGroup>
+      <UFormGroup :error="nameField.errorMessage.value">
         <UInput
           placeholder="Name"
-          v-model="name"
+          type="text"
+          name="name"
+          :value="nameField.value.value"
+          @input="nameField.handleChange"
+          @blur="nameField.handleBlur"
         />
       </UFormGroup>
       <div class="flex flex-col justify-center">
