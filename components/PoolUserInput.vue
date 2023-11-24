@@ -35,13 +35,16 @@ const invalidSumbit = (event: any) => {
   console.log('error', event);
   toast.add({ title: "Invalid Input", closeButton: { icon: "" }, color: 'red' });
 };
-const onSubmit = (event: InputObj) => {
-
-  //validate duplicate email entry
+const onSubmit = (event: any) => {
 
   const emails = event.users.map(user => user.email);
-  console.log(emails);
-  emits('createPool', event);
+  const duplicates = checkForDuplicate(emails);
+
+  if (duplicates.length > 0) {
+    toast.add({ title: "Duplicate email entries.", closeButton: { icon: "" }, color: 'red' });
+    return false;
+  }
+  return emits('createPool', event);
 };
 
 const submitBtn = ref<HTMLElement | null>(null);

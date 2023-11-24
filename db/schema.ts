@@ -1,4 +1,4 @@
-import { pgTable, bigint, varchar, text } from 'drizzle-orm/pg-core';
+import { pgTable, bigint, varchar, text, serial, integer } from 'drizzle-orm/pg-core';
 
 export const user = pgTable('auth_user', {
     id: varchar('id', {
@@ -46,9 +46,7 @@ export const key = pgTable('user_key', {
 });
 
 export const pool = pgTable('pool', {
-    id: varchar('id', {
-        length: 15,
-    }).primaryKey(),
+    id: serial('id').primaryKey(),
     code: varchar('code', {
         length: 10,
     }).notNull(),
@@ -59,9 +57,7 @@ export const pool = pgTable('pool', {
 });
 
 export const member = pgTable('member', {
-    id: varchar('id', {
-        length: 15
-    }).primaryKey(),
+    id: serial('id').primaryKey(),
     name: varchar('name', {
         length: 32
     }).notNull(),
@@ -74,13 +70,7 @@ export const member = pgTable('member', {
 });
 
 export const userPool = pgTable('user_pool', {
-    id: varchar('id', {
-        length: 32,
-    }).primaryKey(),
-    memberId: varchar('member_id', {
-        length: 15,
-    }).notNull().references(() => member.id),
-    poolId: varchar('pool_id', {
-        length: 15
-    }).notNull().references(() => pool.id)
+    id: serial('id').primaryKey(),
+    memberId: integer('member_id').notNull().references(() => member.id),
+    poolId: integer('pool_id').notNull().references(() => pool.id)
 });

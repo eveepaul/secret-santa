@@ -44,6 +44,7 @@ export default defineNuxtConfig({
                 ErrorMessage: 'VeeErrorMessage',
             },
         }],
+        "nuxt-lodash",
     ],
     runtimeConfig: {
         googleClientId: '',

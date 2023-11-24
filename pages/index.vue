@@ -35,13 +35,20 @@ const submit = () => {
     poolUserInput.value?.triggerSubmit();
 };
 
-const createPool = (obj: any) => {
-    console.log(obj);
+const createPool = async (obj: any) => {
+    const param = {
+        owner: user.value?.userId,
+        ...obj
+    };
+    const { data } = await useFetch('/api/pool', {
+        method: 'POST',
+        body: param
+    });
+    console.log(data);
 };
 
 watch(poolIsOpen, (newVal) => {
     if (!newVal) {
-        console.log(generateRandomStr(5));
         usersInput.value = klona(initUsers);
     }
 });
