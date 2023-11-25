@@ -1,4 +1,4 @@
-export default (strings: string[]) => {
+export default (strings: string[] = []) => {
 
   const duplicateIndices = [];
   const seen = new Set();

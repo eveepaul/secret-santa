@@ -1,6 +1,6 @@
 
 <script lang="ts" setup>
-import type { InputObj } from '@/types/userTypes';
+import type { InputObj, UserInput } from '@/types/userTypes';
 import { array, object, string } from 'yup';
 
 
@@ -9,10 +9,11 @@ const { initUsers } = defineProps<{
 }>();
 const emits = defineEmits(['createPool']);
 
-
 const toast = useToast();
 
 const schema = object().shape({
+  title: string().required().label('Title'),
+  description: string().required().label('Description'),
   users: array()
     .of(
       object().shape({
@@ -23,28 +24,21 @@ const schema = object().shape({
     .strict(),
 });
 
-
-
-const { setFieldError } = useForm({
+useForm({
   initialValues: initUsers
 });
 
-
-
-const invalidSumbit = (event: any) => {
-  console.log('error', event);
+const invalidSumbit = () => {
   toast.add({ title: "Invalid Input", closeButton: { icon: "" }, color: 'red' });
 };
-const onSubmit = (event: any) => {
-
-  const emails = event.users.map(user => user.email);
+const onSubmit = (values: any) => {
+  const emails = values.users?.map((user: UserInput) => user.email);
   const duplicates = checkForDuplicate(emails);
-
   if (duplicates.length > 0) {
     toast.add({ title: "Duplicate email entries.", closeButton: { icon: "" }, color: 'red' });
     return false;
   }
-  return emits('createPool', event);
+  return emits('createPool', values);
 };
 
 const submitBtn = ref<HTMLElement | null>(null);
@@ -57,8 +51,6 @@ defineExpose({
   triggerSubmit
 });
 
-
-
 const { fields, push, remove } = useFieldArray('users');
 </script>
 <template>
@@ -68,6 +60,39 @@ const { fields, push, remove } = useFieldArray('users');
     :initial-values="initUsers"
     :validation-schema="schema"
   >
+    <VeeField
+      id="title"
+      name="title"
+      v-slot="{ field, meta }"
+    >
+      <UFormGroup :error="!meta.valid && meta.touched">
+        <UInput
+          placeholder="Title"
+          type="text"
+          class="mb-2"
+          v-bind="field"
+        />
+      </UFormGroup>
+    </VeeField>
+
+    <VeeField
+      id="description"
+      name="description"
+      v-slot="{ field, meta }"
+    >
+      <UFormGroup :error="!meta.valid && meta.touched">
+        <UTextarea
+          placeholder="Description"
+          class="mb-2"
+          v-bind="field"
+        />
+      </UFormGroup>
+    </VeeField>
+
+    <UDivider
+      label="Members"
+      :ui="{ label: 'text-primary-500 dark:text-primary-400 font-light' }"
+    />
     <fieldset
       class="InputGroup"
       v-for="(field, idx) in fields"
