@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { InputObj } from '@/types/userTypes';
+import type { SelectPoolAndMembers } from '~/types/responseTypes';
 import { watch } from 'vue';
 import { klona } from 'klona';
 import PoolUserInput from '~/components/PoolUserInput.vue';
@@ -29,8 +30,12 @@ const list = ref<InstanceType<typeof PoolList> | null>(null);
 
 const user = useUser();
 const poolIsOpen = ref(false);
+const selectedPool = ref<SelectPoolAndMembers | null>(null);
+
+
 const openPool = () => {
     poolIsOpen.value = true;
+    selectedPool.value = null;
 };
 
 const submit = () => {
@@ -42,7 +47,7 @@ const createPool = async (obj: any) => {
         owner: user.value?.userId,
         ...obj
     };
-    const { data, error } = await useFetch('/api/pool', {
+    const { error } = await useFetch('/api/pool', {
         method: 'POST',
         body: param
     });
@@ -50,6 +55,10 @@ const createPool = async (obj: any) => {
         poolIsOpen.value = false;
         list.value?.refresh();
     }
+};
+
+const configurePool = (pool: SelectPoolAndMembers) => {
+    selectedPool.value = pool;
 };
 
 watch(poolIsOpen, (newVal) => {
@@ -67,8 +76,15 @@ watch(poolIsOpen, (newVal) => {
         />
         <div class="lg:mt-20 mt-10 lg:mx-16 mx-10 flex justify-center">
             <PoolList
+                v-if="!selectedPool"
                 ref="list"
                 class="lg:max-w-[800px] max-w-none"
+                @configure-pool="configurePool"
+            />
+            <PoolDetails
+                :pool="selectedPool"
+                @back-to-list="selectedPool = null"
+                v-else
             />
         </div>
         <UModal
